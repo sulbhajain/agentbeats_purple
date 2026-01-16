@@ -1,4 +1,5 @@
 import argparse
+import os
 import uvicorn
 
 from a2a.server.apps import A2AStarletteApplication
@@ -18,19 +19,13 @@ def main():
     parser.add_argument("--host", type=str, default="127.0.0.1", help="Host to bind the server")
     parser.add_argument("--port", type=int, default=9009, help="Port to bind the server")
     parser.add_argument("--card-url", type=str, help="URL to advertise in the agent card")
-    parser.add_argument("--agent-llm", type=str, default="openai/gpt-4.1", help="LLM model to use")
+    parser.add_argument("--agent-llm", type=str, default="openai/gpt-4o-mini", help="LLM model to use")
     args = parser.parse_args()
 
     # Fill in your agent card
     # See: https://a2a-protocol.org/latest/tutorials/python/3-agent-skills-and-card/
     
-    skill = AgentSkill(
-        id="",
-        name="",
-        description="",
-        tags=[],
-        examples=[]
-    )
+    os.environ.setdefault("TAU2_AGENT_LLM", args.agent_llm)
 
     skill = AgentSkill(
         id="task_fulfillment",

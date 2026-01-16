@@ -28,6 +28,8 @@ class Agent:
     def __init__(self):
         self.messenger = Messenger()
         # Initialize other state here
+        self.model = os.getenv("TAU2_AGENT_LLM", "openai/gpt-4o-mini")
+        self.messages: list[dict[str, object]] = [{"role": "system", "content": SYSTEM_PROMPT}]
 
     async def run(self, message: Message, updater: TaskUpdater) -> None:
         """Implement your agent logic here.
