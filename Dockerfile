@@ -9,7 +9,7 @@ COPY src src
 
 RUN \
     --mount=type=cache,target=/home/agent/.cache/uv,uid=1000 \
-    uv sync --locked
+    uv sync --locked --no-dev --no-install-project --extra tau2-agent
 
 ENTRYPOINT ["uv", "run", "src/server.py"]
 CMD ["--host", "0.0.0.0"]
