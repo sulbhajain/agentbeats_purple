@@ -36,6 +36,7 @@ For a concrete example of implementing an agent using this template, see this [d
 ```bash
 # Install dependencies
 uv sync
+uv sync --extra tau2-agent
 
 # Run the server
 uv run src/server.py

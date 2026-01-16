@@ -18,6 +18,7 @@ def main():
     parser.add_argument("--host", type=str, default="127.0.0.1", help="Host to bind the server")
     parser.add_argument("--port", type=int, default=9009, help="Port to bind the server")
     parser.add_argument("--card-url", type=str, help="URL to advertise in the agent card")
+    parser.add_argument("--agent-llm", type=str, default="openai/gpt-4.1", help="LLM model to use")
     args = parser.parse_args()
 
     # Fill in your agent card
@@ -31,15 +32,23 @@ def main():
         examples=[]
     )
 
+    skill = AgentSkill(
+        id="task_fulfillment",
+        name="Task Fulfillment",
+        description="Solves customer service tasks for tau-bench evaluation",
+        tags=["benchmark", "tau2"],
+        examples=[],
+    )
+
     agent_card = AgentCard(
-        name="",
-        description="",
+        name="tau2_agent",
+        description="Customer service agent for tau-bench evaluation",
         url=args.card_url or f"http://{args.host}:{args.port}/",
-        version='1.0.0',
-        default_input_modes=['text'],
-        default_output_modes=['text'],
+        version="1.0.0",
+        default_input_modes=["text"],
+        default_output_modes=["text"],
         capabilities=AgentCapabilities(streaming=True),
-        skills=[skill]
+        skills=[skill],
     )
 
     request_handler = DefaultRequestHandler(
